@@ -1,0 +1,4 @@
+{
+    "private": true,
+    "workspaces": ["pafe-tutorial","tutorial-common","sample-project"]
+  }
