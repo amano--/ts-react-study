@@ -106,6 +106,7 @@ const foo3:Foo = new Foo2Impl()
 本格的に Typescript を勉強したい場合は [ 仕事ですぐに使える TypeScript ]( https://future-architect.github.io/typescript-guide/typescript-guide.pdf )
 が一番参考になるかと思うのでぜひ読んでみてください。
 
+現在の TS は Structural Subtyping(構造的部分型)(TypeScript) と Nominal Subtyping(公称的部分型) が混在している結構複雑な言語なのですが言語なのですが、なぜそうなったのかは歴史的経緯によるので、次はTSの歴史について簡単に触れていこうと思います。
 
 ## Typescriptの歴史を簡単に振り返る
 
@@ -122,14 +123,14 @@ Reactの登場時(2013年) も、最初のコンポーネントの作り方は c
 
 が、ここで一つの罠があります。[ 公式のチュートリアル ](https://ja.reactjs.org/tutorial/tutorial.html) が、classベース で書かれているのです。現在では全くとは言いませんが、ほぼ役に立たない知識なのでやる価値は無いと思うのでお勧めしません。
 
-## JavaScript(値の世界) と Typescript(型の世界) の世界は明確に別れていることを理解する 
+## JavaScript(値の世界) と Typescript(型の世界) の世界は明確に別れていることを理解する
 
 詳しくは以下を参照
 - [ TypeScriptの宣言空間とその不満 ]( https://teppeis.hatenablog.com/entry/2014/04/typescript-declaration-spaces )
 - [ 宣言空間 - TypeScript Deep Dive 日本語版 ]( https://typescript-jp.gitbook.io/deep-dive/project/declarationspaces )
 - [ こわくないTypeScript〜Mapped TypeもConditional Typeも使いこなせ〜 ]( https://blog.uhy.ooo/entry/2020-08-31/dont-fear-ts/#%E5%9E%8B%E5%AE%9A%E7%BE%A9%E3%81%AF%E3%83%AD%E3%82%B8%E3%83%83%E3%82%AF%E3%81%A7%E3%81%82%E3%82%8B )
 
-Java だと以下のように リフレクションAPIを通じて、クラス名からインスタンスを生成したり、インスタンスからクラス情報を取得できる。
+Java だと以下のように リフレクションAPIを通じて、クラス名からインスタンスを生成したり、インスタンスからクラス情報を取得できます。
 
 ```java
 //クラス名からインスタンスを生成できる。
@@ -144,7 +145,7 @@ Class<Something> clazz = target.getClass();
 
 TSではどうでしょうか? よく知られている通りTSはJSにトランスパイルされます。Javaで例えるならバイトコードにあたるのがJSといえるので、JSに型情報が埋め込まれない限り値の世界と型の世界は行き来できません。つまり通常だとTS→JS トランスパイル時に [ 型消去 (type erasure) ]( https://ja.wikipedia.org/wiki/%E5%9E%8B%E6%B6%88%E5%8E%BB ) されるので、値の世界と型の世界はほぼ完全に別れています。つまり Javaのように リフレクションAPI を使ったコードが書けません。
 
-それを TS で実現したい場合は [ reflect-metadata ]( https://github.com/rbuckton/reflect-metadata ) のようなライブラリーを使ってトランスパイル時に、型情報を埋め込む必要がありますが、これもデコレーターという昔から話し合っているけど、いつ決まるのかもよくわからない仕様に依存しているため、現状積極的につかえる状態ではありません。
+それを TS で実現したい場合は [ reflect-metadata ]( https://github.com/rbuckton/reflect-metadata ) のようなライブラリーを使ってトランスパイル時に、値の世界(JS)に型情報を埋め込む必要がありますが、これもデコレーターという昔から話し合っているけど、いつ決まるのかもよくわからない仕様に依存しているため、現状積極的につかえる状態ではありません。
 
 参考 [ TypeScriptによるデコレータの基礎と実践 ]( https://qiita.com/taqm/items/4bfd26dfa1f9610128bc ) [ Decorators ]( https://www.typescriptlang.org/docs/handbook/decorators.html )
 
@@ -161,10 +162,63 @@ const hoge = ""
 type Fuga = hoge
 
 ```
+
+時々この手の謎のエラーに遭遇しますが、型の世界から、型情報が消去された値の世界(トランスパイル語のJSの世界)を参照しようとしていることが原因なので、型の世界(TS)と値の世界(JS) が分離されていることが理解できれば、謎のエラーへの対応もできるようになると思います。
+
+次は、TSに限らないのですが、TSの 関数型言語的な機能部分を理解しようとすると、代数的データ型(ADT) という謎の概念に遭遇するのでそれについて簡単に触れていこうと思います。
+## 代数的データ型(ADT) という謎の概念
+
+TSに限らないのですが 関数型言語の勉強をすすめていくと、代数的データ型(ADT) という謎概念に遭遇します。調べていくうちに「代数的データ型というものの明確な定義はない」的な説明を見つけたりしてびっくりしたりするのだが、どうやらふわっとしたコンセンサスがなんとなくあるふわっとしたキーワードのようだ。「オブジェクト指向言語」とかの「オブジェクト」的な言葉と理解したｗ 
+
+参考 [TypeScriptで学ぶ代数的データ型](https://zenn.dev/eagle/articles/ts-coproduct-introduction)
+
+なので、とある勉強会で「代数的データ型(ADT)とはなんですか?」 と質問してみたところ
+
+「簡単にいうと、データ型を代数的に扱えるということ。代数的とは データ型を足したり、かけたりできるということ」
+
+と、個人的に非常に理解のすすむアドバイスを頂きました。
+
+TS の学習を進めていくと [ Intersection型（交差型） ](https://qiita.com/uhyo/items/e2fdef2d3236b9bfe74a#intersection%E5%9E%8B%E4%BA%A4%E5%B7%AE%E5%9E%8B) や [ Union型（合併型） ](https://qiita.com/uhyo/items/e2fdef2d3236b9bfe74a#union%E5%9E%8B%E5%90%88%E4%BD%B5%E5%9E%8B) などの謎の型に遭遇します。そうこうしていくうちに [ Conditional Types ](https://qiita.com/uhyo/items/e2fdef2d3236b9bfe74a#conditional-types) などどいう 童貞を殺す型とかに遭遇し心を折られたりします。
+
+今思えばこれらの型をJavaでいう標準クラスの Collection,List,Map のようなものだと理解しようとしていたから混乱していたのだとわかるのですが、その頃は Nominal脳だったためそういう理解しかできませんでした。
+
+「TSでは 型も計算して算出します」
+
+ということに気がつけば、Intersection型（交差型）を算出するために 型と型を掛け算するための演算子が 「＆」 で Union型（合併型）を算出するために、型と型を足し算するための演算子が「 | 」なだけ、ということがわかってきます。
+
 ## 型の世界には型を対象とした演算子がある
 
-```ts
+
+```java
+
+class Parent {
+  private String parent
+}
+
+class Child extends Parent {
+  private String child
+}
+
 ```
+
+```ts
+type Parent = { parent:string }
+
+type Child = Parent & { child:string }
+```
+
+
+[  ]()
+[  ]()
+[  ]()
+[  ]()
+[  ]()
+[  ]()
+[  ]()
+[  ]()
+[  ]()
+[  ]()
+
 
 [ TypeScriptにおける型計算の基本 ]( https://qiita.com/recordare/items/58745ef66dd9162e4559 )
 
