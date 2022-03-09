@@ -188,7 +188,9 @@ TS の学習を進めていくと [ Intersection型（交差型） ](https://qii
 
 ## 型の世界には型を対象とした演算子がある
 
+同じような定義をJavaとTSで書いてみます。
 
+Java
 ```java
 
 class Parent {
@@ -201,11 +203,19 @@ class Child extends Parent {
 
 ```
 
+TS
+
 ```ts
 type Parent = { parent:string }
 
 type Child = Parent & { child:string }
 ```
+
+Javaのような Nominal SubTyping の言語から、TS に取り組み始めた当初は class キーワードの代わりに type キーワードを使うのだな、くらいの単純な認識でいたのでイコール記号に違和感があり、「必要なくない？」ぐらいに思っていました。
+
+ました。
+ました。
+
 
 
 [  ]()
