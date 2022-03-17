@@ -214,6 +214,38 @@ type Child = Parent & { child:string }
 Javaのような Nominal SubTyping の言語から、TS に取り組み始めた当初は class キーワードの代わりに type キーワードを使うのだな、くらいの単純な認識でいたのでイコール記号に違和感があり、「必要なくない？」ぐらいに思っていました。
 しかし「TSでは、型は計算可能」ということ「型には型の世界(TS)、値には値の世界(JS)がある」ことを理解したあとだと イコール記号 が自然に見えてきました。
 
+例えば以下のJSを見てみましょう。
+
+```js
+const x = 1
+const y = 1
+const z = x + y
+
+console.log(z === (1 + 1))
+// = true
+```
+
+```ts
+type X = { x : string }
+type Y = { y : string }
+
+type Z = X & Y
+
+const z : Z = { x : 'foo', y : 'bar' }
+
+const z1 : { x : string } & { y : string } = z
+const z2 : { x : string , y : string } = z
+
+
+```
+
+```js
+const z = { x : 'foo', y : 'bar'}
+
+const z1 = z
+const z2 = z
+```
+
 
 
 ました。
