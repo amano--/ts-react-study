@@ -222,8 +222,15 @@ const y = 1
 const z = x + y
 
 console.log(z === (1 + 1))
-// = true
+console.log(x + y === (1 + 1))
+console.log(2 === (x + y))
+console.log(2 === z)
+// すべて true が表示される
+
 ```
+
+なにを当たり前のコードを、と思われるかもしれません。
+次は 型計算をするTSを上記のJSコードに似せて書いてみます。
 
 ```ts
 type X = { x : string }
@@ -235,8 +242,6 @@ const z : Z = { x : 'foo', y : 'bar' }
 
 const z1 : { x : string } & { y : string } = z
 const z2 : { x : string , y : string } = z
-
-
 ```
 
 ```js
