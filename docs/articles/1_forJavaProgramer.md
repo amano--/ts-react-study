@@ -217,14 +217,14 @@ Javaのような Nominal SubTyping の言語から、TS に取り組み始めた
 例えば以下のJSを見てみましょう。
 
 ```js
-const x = 1
-const y = 1
-const z = x + y
+const x = 2
+const y = 2
+const z = x * y
 
-console.log(z === (1 + 1))
-console.log(x + y === (1 + 1))
-console.log(2 === (x + y))
-console.log(2 === z)
+console.log(z === (2 * 2))
+console.log(x * y === (2 * 2))
+console.log(4 === (x * y))
+console.log(4 === z)
 // すべて true が表示される
 
 ```
@@ -243,6 +243,10 @@ const z : Z = { x : 'foo', y : 'bar' }
 const z1 : { x : string } & { y : string } = z
 const z2 : { x : string , y : string } = z
 ```
+
+const が type に変わり、右辺が値情報から型情報に変わっただけで
+
+上記から TSのコードを抜く、つまりトランスパイル後のコードは
 
 ```js
 const z = { x : 'foo', y : 'bar'}
