@@ -247,8 +247,7 @@ const z2 : { x : string , y : string } = z
 const が type に変わり、右辺が値情報から型情報に変わっただけで、基本的には同質のことをしています。
 ただ、const 以降の文が前記のJSのコードからはかけ離れていますが、それは「この型はこの型と同じ」ということをTSのコードで表現するのはちょっと手のこんだことをする必要があるので、型注釈をつかって同じ型であることをわかるようにしたためです。
 
-伝えたいことは Z と { x : string } & { y : string } と { x : string , y : string } は同じ型である、ということです。Z = X & Y なので XとYをインライン展開したら Z = { x : string } & { y : string }  になるので、同じ型で、計算結果である { x : string , y : string } と、計算式である { x : string } & { y : string } 比較しても当然同じ型になる、というわけです。前記のJSの
-
+伝えたいことは Z と { x : string } & { y : string } と { x : string , y : string } は同じ型である、ということです。Z = X & Y なので XとYをインライン展開したら Z = { x : string } & { y : string }  になるので、同じ型で、計算結果である { x : string , y : string } と、計算式である { x : string } & { y : string } 比較しても当然同じ型になる、というわけです。
 型注釈(Type Annotation)とは、const z : Z のコロン(:) 以降のTS部分のことです。Javaだと型は基本必須なので前置ですが、TSでは型は省略可能なので後置です。
 
 ここで少し脱線しますが、上記から TSのコードを抜いてみます。
