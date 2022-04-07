@@ -1,4 +1,4 @@
 {
     "private": true,
-    "workspaces": ["tutorial","common","sample-project"]
+    "workspaces": ["tutorial","common","sample-project","project-template"]
   }
