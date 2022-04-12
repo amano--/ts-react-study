@@ -1,6 +1,13 @@
 
 setup
 
+Volta のインストール
+
+```sh
+volta install node
+volta install yarn
+```
+
 ```sh
 yarn create next-app --typescript
 

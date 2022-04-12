@@ -8,9 +8,9 @@ module.exports = {
     'airbnb/hooks', //追加
     'plugin:@typescript-eslint/recommended', //型を必要としないプラグインの推奨ルールをすべて有効
     'plugin:@typescript-eslint/recommended-requiring-type-checking', //型を必要とするプラグインの推奨ルールをすべて有効
-    // 'prettier', //追加 ESLintの情報に沿ってフォーマット
-    "eslint:recommended",
-    "eslint-config-prettier",
+    'eslint:recommended',
+    'eslint-config-prettier',
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -25,20 +25,22 @@ module.exports = {
   plugins: [
     'react',
     '@typescript-eslint',
-    'unused-imports' //追加 使っていないimportを自動で削除用
+    'unused-imports', //追加 使っていないimportを自動で削除用
   ],
   ignorePatterns: ['build'], //追加 .eslintignoreに対象外にしているが無いとコンパイルに時間がかかる
   rules: {
     'no-use-before-define': 'off', //関数や変数が定義される前に使われているとエラーになるデフォルトの機能をoff
-    '@typescript-eslint/no-use-before-define': ["error"], //typescript側のno-use-before-defineを使うようにする
+    '@typescript-eslint/no-use-before-define': ['error'], //typescript側のno-use-before-defineを使うようにする
     'import/prefer-default-export': 'off', //named exportがエラーになるので使えるようにoff
     '@typescript-eslint/no-unused-vars': 'off', //unused-importsを使うため削除
     'unused-imports/no-unused-imports': 'error', //不要なimportの削除
-    'unused-imports/no-unused-vars': [ //unused-importsでno-unused-varsのルールを再定義
+    'unused-imports/no-unused-vars': [
+      //unused-importsでno-unused-varsのルールを再定義
       'warn',
       { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
     ],
-    'react/function-component-definition': [//アロー関数以外受け付けない設定
+    'react/function-component-definition': [
+      //アロー関数以外受け付けない設定
       2,
       {
         namedComponents: 'arrow-function',
@@ -46,7 +48,8 @@ module.exports = {
       },
     ],
     // 'no-param-reassign': [2, { props: false }], //パラメーターのプロパティ変更を許可
-    'import/extensions': [ //importのときに以下の拡張子を記述しなくてもエラーにしない
+    'import/extensions': [
+      //importのときに以下の拡張子を記述しなくてもエラーにしない
       'error',
       {
         js: 'never',
@@ -55,7 +58,8 @@ module.exports = {
         tsx: 'never',
       },
     ],
-    'react/jsx-filename-extension': [ //jsx形式のファイル拡張子をjsxもしくはtsxに限定
+    'react/jsx-filename-extension': [
+      //jsx形式のファイル拡張子をjsxもしくはtsxに限定
       'error',
       {
         extensions: ['.jsx', '.tsx'],
@@ -63,16 +67,18 @@ module.exports = {
     ],
     'react/react-in-jsx-scope': 'off', //import React from 'react'が無くてもエラーを無くす
     'react/prop-types': 'off', //TypeScriptでチェックしているから不要。offにする
-    'no-void': [ //void演算子の許可
+    'no-void': [
+      //void演算子の許可
       'error',
       {
-        allowAsStatement: true, 
+        allowAsStatement: true,
       },
     ],
     'react/jsx-props-no-spreading': 'off',
   },
   settings: {
-    'import/resolver': { //importするファイルをjsだけではなく、tsを含むファイルを許可する
+    'import/resolver': {
+      //importするファイルをjsだけではなく、tsを含むファイルを許可する
       node: {
         paths: ['src'],
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
