@@ -1,12 +1,10 @@
-import { VFC } from 'react'
+import { useState, VFC } from 'react'
 
 type SampleProps = { hoge: string }
-const Sample: VFC<SampleProps> = (props) => {
-  // const [state, setState] = useState()
+export const Sample: VFC<SampleProps> = (props) => {
+  const [state, setState] = useState(false)
+  console.log('')
   return (
-
-
-
     <>
       <div
         style={{
@@ -14,16 +12,6 @@ const Sample: VFC<SampleProps> = (props) => {
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-        }}
-      >
-        {props.hoge}
-      </div>
-      <div
-        style={{
-          // borderTop: '4px solid #fb8a0b',
-          width: '100%',
-          height: '100%',
-          margin: '4px',
         }}
       >
         {props.hoge}

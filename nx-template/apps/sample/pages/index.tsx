@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
 const StyledPage = styled.div`
   .page {
@@ -6,6 +7,9 @@ const StyledPage = styled.div`
 `;
 
 export function Index() {
+  console.log('');
+  const [state, setState] = useState(false);
+
   /*
    * Replace the elements below with your own.
    *
