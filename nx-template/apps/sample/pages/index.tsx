@@ -20,7 +20,7 @@ export function Index() {
       <div className="wrapper">
         <div className="container">
           <div id="welcome">
-            <h1>
+            <h1 data-e2e="pageTitle">
               <span> Hello there, </span>
               Welcome sample 👋
             </h1>

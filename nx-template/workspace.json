@@ -2,6 +2,9 @@
   "version": 2,
   "projects": {
     "sample": "apps/sample",
-    "sample-e2e": "apps/sample-e2e"
+    "sample-e2e": "apps/sample-e2e",
+    "shared-e2e-utils": "libs/shared/e2e-utils",
+    "shared-greeter": "libs/shared/greeter",
+    "shared-greeter-e2e": "apps/shared-greeter-e2e"
   }
 }

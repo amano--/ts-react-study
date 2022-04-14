@@ -1,0 +1,28 @@
+{
+  "root": "apps/shared-greeter-e2e",
+  "sourceRoot": "apps/shared-greeter-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/shared-greeter-e2e/cypress.json",
+        "devServerTarget": "shared-greeter:storybook"
+      },
+      "configurations": {
+        "ci": {
+          "devServerTarget": "shared-greeter:storybook:ci"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/shared-greeter-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["shared-greeter"]
+}

@@ -1,5 +1,7 @@
 https://nx.dev/react-tutorial/01-create-application
 
+https://cypress.io/blog/2020/04/14/high-quality-react-apps-with-nx-cypress/
+
 # NxTemplate
 
 This project was generated using [Nx](https://nx.dev).
