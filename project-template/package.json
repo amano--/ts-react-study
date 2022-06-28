@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "eslint --cache --fix 'src/**/*.{js,jsx,ts,tsx}' && prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
+    "gen_qt": "npx quicktype types.ts -o Types.cs",
+
     "ck": "yarn format && yarn lint"
   },
   "dependencies": {
